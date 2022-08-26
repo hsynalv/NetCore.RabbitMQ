@@ -8,12 +8,18 @@ using var connection = factory.CreateConnection();
 var channel = connection.CreateModel();
 channel.QueueDeclare("hello-queue",true,false,false);
 
-string message = "hello world";
+Enumerable.Range(1, 50).ToList().ForEach(x =>
+{
+    string message = $"message : {x}";
 
-var messageBody = Encoding.UTF8.GetBytes(message);
+    var messageBody = Encoding.UTF8.GetBytes(message);
 
-channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
+    channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
 
-Console.WriteLine("Mesaj Gönderilmiştir");
+    Console.WriteLine($"Mesaj Gönderilmiştir : {message}");
+
+});
+
+
 
 Console.ReadKey();
