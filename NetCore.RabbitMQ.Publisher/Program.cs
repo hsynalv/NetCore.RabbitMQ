@@ -11,36 +11,20 @@ factory.Uri = new Uri("amqps://zlkovbxc:GsFqD2e-IEBd4QGyNBS6R0nTgv7SvMe8@shark.r
 using var connection = factory.CreateConnection();
 var channel = connection.CreateModel();
 
-channel.ExchangeDeclare("logs-topic",  type: ExchangeType.Direct, durable: true);
+channel.ExchangeDeclare("header-exchange",  type: ExchangeType.Headers, durable: true);
 
-Enumerable.Range(1, 50).ToList().ForEach(x =>
-{
-    var random = new Random();
-    LogNames log1 = (LogNames)random.Next(1, 5);
-    LogNames log2 = (LogNames)random.Next(1, 5);
-    LogNames log3 = (LogNames)random.Next(1, 5);
-    
-    var routeKey = $"{log1}.{log2}.{log3}";
-    string message = $"log-type : {log1}-{log2}-{log3}";
-    var messageBody = Encoding.UTF8.GetBytes(message);
+Dictionary<string, object> header = new();
+header.Add("format","pdf");
+header.Add("shape","a4");
 
-    channel.BasicPublish("logs-topic", routeKey, null, messageBody);
-
-    Console.WriteLine($"Log Gönderilmiştir : {message}");
-
-});
+var properties = channel.CreateBasicProperties();
+    properties.Headers = header;
 
 
+channel.BasicPublish("header-exchange", "", properties, Encoding.UTF8.GetBytes("Header mesajı"));
 
+Console.WriteLine("Mesaj gönderilmiştir");
 Console.ReadKey();
 
 
 
-
-public enum LogNames
-{
-    Critical = 1,
-    Error = 2,
-    Warning = 3,
-    Info = 4
-}

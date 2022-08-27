@@ -14,8 +14,13 @@ channel.BasicQos(0,1,false);
 
 var consumer = new EventingBasicConsumer(channel);
 var queueName = channel.QueueDeclare().QueueName;
-var routeKey = "*.Info.*";
-channel.QueueBind(queueName, "logs-topic", routingKey:routeKey);
+
+Dictionary<string, object> headers = new();
+headers.Add("format", "pdf");
+headers.Add("shape", "a4");
+headers.Add("x-match", "any"/*"all"*/);
+
+channel.QueueBind(queueName, "header-exchange", string.Empty, headers);
 channel.BasicConsume(queueName, false, consumer);
 
 Console.WriteLine("Loglar dinleniyor...");
