@@ -5,36 +5,26 @@ using System.Text;
 
 
 
-
-
 var factory = new ConnectionFactory();
 factory.Uri = new Uri("amqps://zlkovbxc:GsFqD2e-IEBd4QGyNBS6R0nTgv7SvMe8@shark.rmq.cloudamqp.com/zlkovbxc");
 
 using var connection = factory.CreateConnection();
 var channel = connection.CreateModel();
 
-channel.ExchangeDeclare("logs-direct",  type: ExchangeType.Direct, durable: true);
-
-Enum.GetNames(typeof(LogNames)).ToList().ForEach(x =>
-{
-    var queueName = $"direct-queue-{x}";
-    var routeKey = $"route-{x}";
-    channel.QueueDeclare(queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
-    channel.QueueBind(queueName, "logs-direct", routeKey, null);
-});
+channel.ExchangeDeclare("logs-topic",  type: ExchangeType.Direct, durable: true);
 
 Enumerable.Range(1, 50).ToList().ForEach(x =>
 {
-
-    LogNames log = (LogNames)new Random().Next(1, 5);
-
-    string message = $"log-type : {log}";
-
+    var random = new Random();
+    LogNames log1 = (LogNames)random.Next(1, 5);
+    LogNames log2 = (LogNames)random.Next(1, 5);
+    LogNames log3 = (LogNames)random.Next(1, 5);
+    
+    var routeKey = $"{log1}.{log2}.{log3}";
+    string message = $"log-type : {log1}-{log2}-{log3}";
     var messageBody = Encoding.UTF8.GetBytes(message);
 
-    var routeKey = $"route-{log}";
-
-    channel.BasicPublish("logs-direct", routeKey, null, messageBody);
+    channel.BasicPublish("logs-topic", routeKey, null, messageBody);
 
     Console.WriteLine($"Log Gönderilmiştir : {message}");
 
