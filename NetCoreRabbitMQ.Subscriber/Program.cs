@@ -10,19 +10,11 @@ factory.Uri = new Uri("amqps://zlkovbxc:GsFqD2e-IEBd4QGyNBS6R0nTgv7SvMe8@shark.r
 using var connection = factory.CreateConnection();
 var channel = connection.CreateModel();
 
-var randomQueueName = channel.QueueDeclare().QueueName + "randomQueueName"; // => Random queue ismi oluşturmak için
-
-//var randomQueueName = "log-database-save-queue";
-//channel.QueueDeclare(randomQueueName, true, false, false);  => Kalicı kuyruk edinmek için kuyruk decalre etmek gerek
-
-
-channel.QueueBind(randomQueueName, "logs-fanout", "",null); // bu durumda subscriber düştüğü anda kuyruk da düşer
-
 channel.BasicQos(0,1,false);
 
 var consumer = new EventingBasicConsumer(channel);
-
-channel.BasicConsume(randomQueueName, false, consumer);
+var queueName = "direct-queue-Critical";
+channel.BasicConsume(queueName, false, consumer);
 
 Console.WriteLine("Loglar dinleniyor...");
 
