@@ -1,12 +1,15 @@
 ﻿using RabbitMQ.Client;
 using System.Text;
 
+// ------------ Publisher ------------ //
+
 var factory = new ConnectionFactory();
 factory.Uri = new Uri("amqps://zlkovbxc:GsFqD2e-IEBd4QGyNBS6R0nTgv7SvMe8@shark.rmq.cloudamqp.com/zlkovbxc");
 
 using var connection = factory.CreateConnection();
 var channel = connection.CreateModel();
-channel.QueueDeclare("hello-queue",true,false,false);
+
+channel.ExchangeDeclare("logs-fanout",  type: ExchangeType.Fanout, durable: true);
 
 Enumerable.Range(1, 50).ToList().ForEach(x =>
 {
@@ -14,7 +17,7 @@ Enumerable.Range(1, 50).ToList().ForEach(x =>
 
     var messageBody = Encoding.UTF8.GetBytes(message);
 
-    channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
+    channel.BasicPublish("logs-fanout", "", null, messageBody);
 
     Console.WriteLine($"Mesaj Gönderilmiştir : {message}");
 
