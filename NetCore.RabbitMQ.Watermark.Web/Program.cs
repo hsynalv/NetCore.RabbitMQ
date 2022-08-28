@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NetCore.RabbitMQ.Watermark.Web.BackgroundServices;
 using NetCore.RabbitMQ.Watermark.Web.Models;
 using NetCore.RabbitMQ.Watermark.Web.Services;
 using RabbitMQ.Client;
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 builder.Services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(builder.Configuration.GetConnectionString("RabbitMQ")) });
 builder.Services.AddSingleton<RabbitMQClientService>();
 builder.Services.AddSingleton<RabbitMQPublisher>();
+builder.Services.AddHostedService<ImageWatermarkProcessBackgroundService>();
 
 builder.Services.AddControllersWithViews();
 
