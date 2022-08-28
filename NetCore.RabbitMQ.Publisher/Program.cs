@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices.ComTypes;using RabbitMQ.Client;
 using System.Text;
+using System.Text.Json;
+using Shared;
 
 // ------------ Publisher ------------ //
 
@@ -21,8 +23,10 @@ var properties = channel.CreateBasicProperties();
     properties.Headers = header;
     properties.Persistent = true;
 
+var product = new Product() { Id = 1, Name = "Kalem", Price = 10, Stock = 100};
+var productJsonString = JsonSerializer.Serialize(product);
 
-channel.BasicPublish("header-exchange", "", properties, Encoding.UTF8.GetBytes("Header mesajı"));
+channel.BasicPublish("header-exchange", "", properties, Encoding.UTF8.GetBytes(productJsonString));
 
 Console.WriteLine("Mesaj gönderilmiştir");
 Console.ReadKey();

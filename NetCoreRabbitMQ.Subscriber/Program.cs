@@ -1,6 +1,9 @@
-﻿using RabbitMQ.Client;
+﻿using System.Net.Http.Headers;
+using RabbitMQ.Client;
 using System.Text;
+using System.Text.Json;
 using RabbitMQ.Client.Events;
+using Shared;
 
 // ------------ Subscriber ------------ //
 
@@ -28,7 +31,9 @@ Console.WriteLine("Loglar dinleniyor...");
 consumer.Received += (object? sender, BasicDeliverEventArgs e) =>
 {
     var message = Encoding.UTF8.GetString(e.Body.ToArray());
-    Console.WriteLine($"Gelen mesaj : {message}");
+    Product product = JsonSerializer.Deserialize<Product>(message);
+    
+    Console.WriteLine($"Gelen mesaj : {product.Id} {product.Name}");
     channel.BasicAck(e.DeliveryTag, false);
 };
 

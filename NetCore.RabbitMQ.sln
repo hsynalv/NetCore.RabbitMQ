@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore.RabbitMQ.Publisher", "NetCore.RabbitMQ.Publisher\NetCore.RabbitMQ.Publisher.csproj", "{215CA26B-EE47-4048-A958-EF987020EAF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreRabbitMQ.Subscriber", "NetCoreRabbitMQ.Subscriber\NetCoreRabbitMQ.Subscriber.csproj", "{786D0E23-47C7-41E1-8D80-A899F7F82B47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreRabbitMQ.Subscriber", "NetCoreRabbitMQ.Subscriber\NetCoreRabbitMQ.Subscriber.csproj", "{786D0E23-47C7-41E1-8D80-A899F7F82B47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{638072C7-B704-4CDC-9CBA-C6C52200D5EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{786D0E23-47C7-41E1-8D80-A899F7F82B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{786D0E23-47C7-41E1-8D80-A899F7F82B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{786D0E23-47C7-41E1-8D80-A899F7F82B47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{638072C7-B704-4CDC-9CBA-C6C52200D5EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{638072C7-B704-4CDC-9CBA-C6C52200D5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{638072C7-B704-4CDC-9CBA-C6C52200D5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{638072C7-B704-4CDC-9CBA-C6C52200D5EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
