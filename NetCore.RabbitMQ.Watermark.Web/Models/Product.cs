@@ -11,6 +11,6 @@ namespace NetCore.RabbitMQ.Watermark.Web.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         public int Stock { get; set; }
-        public string PictureUrl { get; set; }
+        public string ImageName { get; set; }
     }
 }
