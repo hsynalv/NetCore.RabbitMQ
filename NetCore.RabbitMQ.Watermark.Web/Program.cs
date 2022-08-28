@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NetCore.RabbitMQ.Watermark.Web.Models;
+using NetCore.RabbitMQ.Watermark.Web.Services;
+using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,8 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseInMemoryDatabase("productDb");
 });
+builder.Services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(builder.Configuration.GetConnectionString("RabbitMQ")) });
+builder.Services.AddSingleton<RabbitMQClientServices>();
 
 builder.Services.AddControllersWithViews();
 
