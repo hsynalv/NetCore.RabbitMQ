@@ -2,7 +2,7 @@
 
 namespace NetCore.RabbitMQ.Watermark.Web.Services
 {
-    public class RabbitMQClientServices : IDisposable
+    public class RabbitMQClientService : IDisposable
     {
         private readonly ConnectionFactory _factory;
         private IConnection _connection;
@@ -10,9 +10,9 @@ namespace NetCore.RabbitMQ.Watermark.Web.Services
         public static string ExchangeName = "ImageDirectExchange";
         public static string RoutingWatermark = "watermark-route-image";
         public static string QueueName = "queue-watermark-image";
-        private readonly ILogger<RabbitMQClientServices> _logger;
+        private readonly ILogger<RabbitMQClientService> _logger;
 
-        public RabbitMQClientServices(ConnectionFactory factory, ILogger<RabbitMQClientServices> logger)
+        public RabbitMQClientService(ConnectionFactory factory, ILogger<RabbitMQClientService> logger)
         {
             _factory = factory;
             _logger = logger;
