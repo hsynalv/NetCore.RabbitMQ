@@ -30,8 +30,8 @@ namespace NetCore.RabbitMQ.Watermark.Web.Services
             _channel.ExchangeDeclare(ExchangeName,ExchangeType.Direct, true, false);
 
             _channel.QueueDeclare(QueueName, true, false, false, null);
-            
-            _channel.QueueBind(ExchangeName,QueueName,RoutingWatermark);
+
+            _channel.QueueBind(QueueName, ExchangeName, RoutingWatermark);
             _logger.LogInformation("RabbitMq ile bağlantı kuruldu");
 
             return _channel;
